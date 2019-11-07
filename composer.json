@@ -1,0 +1,30 @@
+{
+    "name": "magentopack/vietech",
+    "description": "",
+    "authors": [
+        {
+            "name": "Pratik Rasam",
+            "email": "pratikrasam5@gmail.com"
+        }
+    ],
+    "require": {
+            "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Magento\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",  
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Magento\\MagentoServiceProvider"
+            ],
+            "aliases": {
+                "Magento": "Magento\\Facades\\MagentoFetch"
+            }
+        }
+    }
+}
