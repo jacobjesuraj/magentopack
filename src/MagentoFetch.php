@@ -15,8 +15,7 @@ class MagentoFetch
     */
 	public function FetchToken($data)
 	{
-		// echo "da";exit;
-
+		
 		$jsonString = file_get_contents(base_path('resources/lang/'.$data));
 		$data = json_decode($jsonString);
 		$url = $data->url."/index.php/rest/".$data->version."/integration/admin/token";
