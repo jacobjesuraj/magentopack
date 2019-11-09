@@ -9,19 +9,21 @@ use App\Http\Requests;
  */
 class MagentoFetch 
 {	
-
+	
 	/* 
     	Generates a new token by getting admin credetials.
     */
 	public function FetchToken($data)
 	{
-		//echo "da";exit;
+		// echo "da";exit;
+
 		$jsonString = file_get_contents(base_path('resources/lang/'.$data));
 		$data = json_decode($jsonString);
 		$url = $data->url."/index.php/rest/".$data->version."/integration/admin/token";
-		$username = config('magento.magento_username');
-        $password = config('magento.magento_password');
-		   
+		// $username = config('magento.magento_username');
+  //       $password = config('magento.magento_password');
+		  $username= 'admin';
+		  $password= 'A9@KLCwEjd';
 		try {
 		
 		$client = new \GuzzleHttp\Client();
@@ -56,9 +58,10 @@ class MagentoFetch
         $jsonString = file_get_contents(base_path('resources/lang/'.$data));
     	$data = json_decode($jsonString);
    
-    	$username = config('magento.magento_username');
-        $password = config('magento.magento_password');
-
+    	// $username = config('magento.magento_username');
+     //    $password = config('magento.magento_password');
+  //       $username= 'admin';
+		// $password= 'A9@KLCwEjd';
         $url = $data->url."/index.php/rest/".$data->version."/orders/".$data->order_id;
         $token = $data->token;
 
@@ -80,7 +83,7 @@ class MagentoFetch
 			        $res = $client->request('GET',$url,array('headers' => $header));
 
 			        $result= json_decode($res->getBody());
-			        dd($result);
+			        dump($result);
 				}
 			}catch (\GuzzleHttp\Exception\ClientException $e) {
 				echo "Unable to fetch order" ;
@@ -129,7 +132,7 @@ class MagentoFetch
 
 			}
 		}catch (\GuzzleHttp\Exception\ClientException $e) {
-			echo "Unable to fetch orders. "
+			echo "Unable to fetch orders. ";
 		}
 
 
@@ -659,7 +662,9 @@ class MagentoFetch
     }	
 
 
-
+    /*
+    	Update Stock of multiple products.
+    */
      public function UpdateMultipleProducts($data){
 
     	$getTokenData=$data;
@@ -774,9 +779,6 @@ class MagentoFetch
 
 
 
-    public function fetch(){
-    	echo "asd";
-    }
 
 
 }
