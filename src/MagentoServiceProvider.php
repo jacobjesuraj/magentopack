@@ -25,7 +25,19 @@ class MagentoServiceProvider extends ServiceProvider
 
         // return new Facebook(config('facebook'));
         // }
-
+        $this->commands([
+            Console\MagentoCommand::class,
+            Console\MagentoFetchOrderByDate::class,
+            Console\UpdateSingleOrder::class,
+            Console\UpdateOrdersById::class,
+            Console\UpdateOrdersByDate::class,
+            Console\CreateOrder::class,
+            Console\CreateProduct::class,
+            Console\GetStock::class,
+            Console\GetAllStock::class,
+            Console\UpdateStock::class,
+            Console\UpdateMultipleProducts::class
+        ]);
     }
 
     /**
