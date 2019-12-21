@@ -2,8 +2,9 @@
 namespace Magento;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\App;
-use Magento\MagentoFetch;
+//use Illuminate\Support\Facades\App;
+//use Magento\Magento;
+use Magento\Contracts\MagentoContract;
 
 class MagentoServiceProvider extends ServiceProvider
 {
@@ -15,29 +16,23 @@ class MagentoServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        //$this->app->make('App\Http\Controllers\MagentoController');
+        
+        // $this->app->bind('magento',function() {
+        //      return new Magento();
+        // });
 
-        $this->app->bind('magento',function() {
-             return new MagentoFetch();
+
+        // $this->app->bind('MagentoContract', 'magento');
+
+        $this->app->singleton(
+            MagentoContract::class, function($app) {
+
+             $magentoAuth = new MagentoAuth($app['request'], config( 'magento.magento_username' ),config( 'magento.magento_password' ));
+
+             return new Magento($magentoAuth);
+
         });
-
-        // $this->app->bind('magento', function ($app) {
-
-        // return new Facebook(config('facebook'));
-        // }
-        $this->commands([
-            Console\MagentoCommand::class,
-            Console\MagentoFetchOrderByDate::class,
-            Console\UpdateSingleOrder::class,
-            Console\UpdateOrdersById::class,
-            Console\UpdateOrdersByDate::class,
-            Console\CreateOrder::class,
-            Console\CreateProduct::class,
-            Console\GetStock::class,
-            Console\GetAllStock::class,
-            Console\UpdateStock::class,
-            Console\UpdateMultipleProducts::class
-        ]);
+       
     }
 
     /**
@@ -48,5 +43,8 @@ class MagentoServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+         $this->publishes([
+            __DIR__ . '/config/magento.php' => config_path('magento.php')
+        ], 'magento');
     }
 }
